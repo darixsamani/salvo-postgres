@@ -31,6 +31,7 @@ sudo apt-get update && apt-get install -y libpq-dev
 cargo install diesel_cli --no-default-features --features postgres
 ```
 
+---
 
 ## 🐘 Run PostgreSQL Instance (via Docker)
 
@@ -47,6 +48,8 @@ docker run -d \
   postgres:latest
 ```
 
+---
+
 ## 🔧 Run Database Migrations
 
 
@@ -55,6 +58,8 @@ Run all Diesel migrations to set up your database schema:
 ```bash
 diesel migration run
 ```
+
+---
 
 ## 🏎️ Run Application with Cargo
 
@@ -81,6 +86,8 @@ cargo run
 
 The application will compile and launch your Salvo server, making it instantly available for local development and testing.
 
+---
+
 ## 🐳 Run with Docker (without Docker Compose)
 
 If you prefer running the application directly with Docker, update the environment variable to match your PostgreSQL connection URL:
@@ -96,6 +103,8 @@ docker run -d -p 5800:5800 \
 
 ```
 
+---
+
 
 ## 🚢 Deploy with Docker Compose
 
@@ -105,11 +114,16 @@ Easily build and deploy your application using Docker Compose 🧱🐳:
 docker compose up -d --build
 ```
 
+---
+
+
 ### 🌐 Access the API Docs
 
 Open the OpenAPI Salvo interactive docs at:
 
 👉 [http://0.0.0.0:5800/docs](http://0.0.0.0:5800/docs)
+
+---
 
 ### 🧩 Example Preview Docs
 
