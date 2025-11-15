@@ -108,7 +108,7 @@ docker compose up -d --build
 
 ### 🌐 3. Access the API Docs
 
-Open the FastAPI interactive docs at:
+Open the OpenAPI Salvo interactive docs at:
 
 👉 [http://0.0.0.0:5800/docs](http://0.0.0.0:5800/docs)
 
