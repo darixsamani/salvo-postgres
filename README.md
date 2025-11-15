@@ -105,3 +105,13 @@ Easily build and deploy your application using Docker Compose 🧱🐳:
 ```bash
 docker compose up -d --build
 ```
+
+### 🌐 3. Access the API Docs
+
+Open the FastAPI interactive docs at:
+
+👉 [http://0.0.0.0:5800/docs](http://0.0.0.0:5800/docs)
+
+### 🧩 5. Example Preview Docs
+
+ ![IMAGE](./img/image.png)
