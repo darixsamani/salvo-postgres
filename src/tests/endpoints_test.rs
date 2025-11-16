@@ -84,7 +84,7 @@ pub mod tests{
         let response = TestClient::post("http://localhost/users/login")
             .json(&serde_json::json!({
                 "username": "samanidarix@gmail.com",
-                "password": "Siewejeanpaul15$"
+                "password": "Testpassword15$"
             }))
             .send(router)
             .await;
@@ -127,7 +127,7 @@ pub mod tests{
 
         // Attempt GET /users/me without auth header
         let response = TestClient::get("http://localhost/users/me")
-                        .add_header("authentification", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhbWFuaWRhcml4QGdtYWlsLmNvbSIsImV4cCI6MTc2MzIxNDQ3MX0.YnRhrI2Ik2rHFao9f2_tk-DkiTwA9Bcv_O22oCfNKuI", false)
+                        .add_header("authentification", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhbWFuaWRhcml4QGdtYWlsLmNvbSIsImV4cCI6MTc2MzM3NjQzNH0.HmV5nmIDnqd10YtyIRJx737-nyiJLmzi7udHwnAwyyE", false)
                         .send(router).await;
         println!("Response in test me: {:?}", response);
         assert_eq!(response.status_code, Some(StatusCode::OK));
@@ -146,8 +146,8 @@ pub mod tests{
         // let client = TestClient::new(service);
 
         // Example POST request to login
-        let response = TestClient::put(format!("http://localhost/users/{}", "62a23403-e1d4-49f5-8bc4-65c30be5070d"))
-            .add_header("authentification", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhbWFuaWRhcml4QGdtYWlsLmNvbSIsImV4cCI6MTc2MzIxNDQ3MX0.YnRhrI2Ik2rHFao9f2_tk-DkiTwA9Bcv_O22oCfNKuI", true)
+        let response = TestClient::put(format!("http://localhost/users/{}", "73195821-51e4-407d-86b5-deadef4d43a5"))
+            .add_header("authentification", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhbWFuaWRhcml4QGdtYWlsLmNvbSIsImV4cCI6MTc2MzM3NjQzNH0.HmV5nmIDnqd10YtyIRJx737-nyiJLmzi7udHwnAwyyE", true)
             .json(&serde_json::json!({
                 "fullname": "Darix SAMANI SIEWE"
             }))
@@ -174,8 +174,8 @@ pub mod tests{
         // let client = TestClient::new(service);
 
         // Example POST request to login
-        let response = TestClient::put(format!("http://localhost/users/{}", "447ea068-e6eb-4b12-ab8c-db7a79764505"))
-            .add_header("authentification", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhbWFuaWRhcml4QGdtYWlsLmNvbSIsImV4cCI6MTc2MzIxNDQ3MX0.YnRhrI2Ik2rHFao9f2_tk-DkiTwA9Bcv_O22oCfNKuI", true)
+        let response = TestClient::put(format!("http://localhost/users/{}", "73195821-51e4-407d-86b5-deadef4d43a5"))
+            .add_header("authentification", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhbWFuaWRhcml4QGdtYWlsLmNvbSIsImV4cCI6MTc2MzM3NjQzNH0.HmV5nmIDnqd10YtyIRJx737-nyiJLmzi7udHwnAwyyE", true)
             .json(&serde_json::json!({
                 "username": "samanidarix@gmail.com",
                 "full_name": "Darix SAMANI SIEWE"
