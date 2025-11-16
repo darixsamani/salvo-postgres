@@ -1,11 +1,12 @@
 use std::sync::Arc;
+use chrono::Utc;
 use salvo::prelude::*;
 use diesel::prelude::*;
 use salvo_oapi::{
     endpoint,
     extract::{HeaderParam, JsonBody, PathParam},
 };
-use crate::{models::{posts::NewPost, schema::posts::{content, dsl::posts, title}}, schemas::ErrorResponseModel};
+use crate::{models::{posts::NewPost, schema::posts::{content, dsl::posts, title, updated_at}}, schemas::ErrorResponseModel};
 use crate::{auth::auth::auth_user, database::db::DbPool, models::{posts::Posts, users::Users}};
 use crate::schemas::posts::PostCreate;
 use uuid::Uuid;
@@ -55,14 +56,17 @@ fn create_posts(res: &mut Response, post_create: JsonBody<PostCreate>, depot: &m
 
     println!("👤 Current user: {:?}", current_user);
 
-
+    let now = Utc::now().naive_utc();
 
     // ✅ Create new post
     let new_post = NewPost {
         id: Uuid::new_v4(),
         content: post_create.content.clone(),
         title: post_create.title.clone(),
-        user_id: current_user.id.clone()
+        user_id: current_user.id.clone(),
+        created_at: now,
+        updated_at: now
+
     };
 
     // ✅ Insert into DB
@@ -128,6 +132,7 @@ fn update_posts(post_id: PathParam<Uuid>, res: &mut Response, post_update: JsonB
                 .set((
                     title.eq(&update_data.title),
                     content.eq(&update_data.content),
+                    updated_at.eq(&Utc::now().naive_utc())
                 ))
                 .execute(&mut conn)
                 .expect("Failed to update post information");
@@ -178,7 +183,7 @@ fn delete_posts(post_id: PathParam<Uuid>, res: &mut Response, depot: &mut Depot,
     let Some(post) = existing_post else {
         res.status_code(StatusCode::BAD_REQUEST);
         res.render(Json(ErrorResponseModel{
-            detail: format!("The post with id: {} don't exits in databe", {post_uuid})
+            detail: format!("The post with id: {} don't exits in database", {post_uuid})
         }));
         return  ;
     };

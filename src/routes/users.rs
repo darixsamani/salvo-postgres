@@ -1,3 +1,4 @@
+use chrono::Utc;
 use salvo::prelude::*;
 use salvo_oapi::endpoint;
 use salvo_oapi::extract::{HeaderParam, JsonBody, PathParam};
@@ -6,7 +7,7 @@ use jsonwebtoken::{EncodingKey, encode};
 use uuid::Uuid;
 use crate::auth::auth::auth_user;
 use crate::database::db::DbPool;
-use crate::models::schema::users::{full_name, id, username};
+use crate::models::schema::users::{full_name, id, updated_at, username};
 use crate::schemas::{ErrorResponseModel, JwtClaims, TokenResponseModel};
 use crate::schemas::users::{UserCreate, UserCredentiel, UserResponseModel, UserSuccessResponseModel, UserUpdate};
 use crate::models::users::{NewUser, Users};
@@ -45,7 +46,12 @@ fn get_all_users(res: &mut Response, authentification: HeaderParam<String, true>
 
     let all_users_respone: Vec<UserResponseModel> = all_users
         .iter()
-        .map(|user| UserResponseModel{id: user.id, email: user.username.clone(), full_name: user.username.clone()})
+        .map(|user| UserResponseModel{
+            id: user.id, email: user.username.clone(), 
+            full_name: user.username.clone(), 
+            created_at: user.created_at.clone(),
+            updated_at: user.updated_at.clone(),
+        })
         .collect();
 
     res.render(Json(all_users_respone))
@@ -91,12 +97,16 @@ fn create_users(res: &mut Response,  depot: &mut Depot, user_create: JsonBody<Us
         }
     };
 
+    let now = Utc::now().naive_utc();
+
     // ✅ Create new user
     let new_user = NewUser {
         id: Uuid::new_v4(),
         username: user_create.email.clone(),
         password: hashed,
         full_name: user_create.fullname.clone(),
+        created_at: now,
+        updated_at: now,
     };
 
     // ✅ Insert into DB
@@ -136,6 +146,10 @@ pub async fn get_users_information(res: &mut Response, depot: &mut Depot, authen
         id: current_user.id,
         email: current_user.username.clone(), // or change field if you have separate email
         full_name: current_user.full_name.clone(),
+        created_at: current_user.created_at.clone(),
+        updated_at: current_user.created_at.clone(),
+        
+
     };
 
     // ✅ Send JSON response
@@ -177,6 +191,7 @@ fn update_users(user_id: PathParam<Uuid>, res: &mut Response, authentification: 
     let result = diesel::update(users.find(user_uuid))
         .set((
             full_name.eq(&update_data.fullname),
+            updated_at.eq(&Utc::now().naive_utc())
             ),
         )
         .execute(&mut conn)
@@ -196,6 +211,8 @@ fn update_users(user_id: PathParam<Uuid>, res: &mut Response, authentification: 
                     id: current_user.id,
                     email: current_user.username.clone(),
                     full_name: current_user.full_name.clone(),
+                    created_at: current_user.created_at.clone(),
+                    updated_at: current_user.updated_at.clone()
 
                 }));
                 return ;
@@ -259,6 +276,8 @@ fn delete_users(user_id: PathParam<Uuid>, res: &mut Response, authentification: 
                     id: current_user.id,
                     email: current_user.username.clone(),
                     full_name: current_user.full_name.clone(),
+                    created_at: current_user.created_at.clone(),
+                    updated_at: current_user.updated_at.clone(),
 
                 }));
         }

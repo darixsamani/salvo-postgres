@@ -1,3 +1,4 @@
+use chrono::NaiveDateTime;
 use salvo::macros::Extractible;
 use salvo_oapi::ToSchema;
 use serde::{Deserialize, Serialize};
@@ -23,6 +24,8 @@ pub struct UserResponseModel {
     pub id: Uuid,
     pub email: String,
     pub full_name: String,
+    pub created_at: NaiveDateTime,
+    pub updated_at: NaiveDateTime,
 }
 
 #[derive(Serialize, Deserialize, Extractible, Debug)]
@@ -41,6 +44,8 @@ pub struct UserUpdate {
 pub struct UserSuccessResponseModel{
     pub id: Uuid,
     pub email: String,
-    pub full_name: String
+    pub full_name: String,
+    pub created_at: NaiveDateTime,
+    pub updated_at: NaiveDateTime,
 
 }
