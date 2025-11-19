@@ -11,7 +11,7 @@ use diesel::prelude::*;
 use crate::models::schema::users::dsl::users;
 
 #[endpoint]
-pub fn auth_user(res: &mut Response, depot: &mut Depot, ctrl: &mut FlowCtrl, authentification: HeaderParam<String, true>,) {
+pub fn auth_user(res: &mut Response, depot: &mut Depot, ctrl: &mut FlowCtrl, authentication: HeaderParam<String, true>,) {
     println!("🔐 Call Authentication");
 
     // ✅ Get DB connection
@@ -21,7 +21,7 @@ pub fn auth_user(res: &mut Response, depot: &mut Depot, ctrl: &mut FlowCtrl, aut
 
     // ✅ Decode the JWT
     let decoded = match decode::<JwtClaims>(
-        authentification.clone(),
+        authentication.clone(),
         &DecodingKey::from_secret(SECRET_KEY.as_ref()),
         &Validation::default(),
     ) {

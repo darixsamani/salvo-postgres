@@ -25,10 +25,10 @@ use crate::utils::SECRET_KEY;
     summary = "get all users",
     description = "the objective of this endpoint is to retrieve all the users in database"
 )]
-fn get_all_users(res: &mut Response, authentification: HeaderParam<String, true>, depot: &mut Depot) {
+fn get_all_users(res: &mut Response, authentication: HeaderParam<String, true>, depot: &mut Depot) {
     
     
-    println!("🪪 Authentication header: {}", authentification.as_str());
+    println!("🪪 Authentication header: {}", authentication.as_str());
 
     // ✅ Get DB connection
     let pool = depot.obtain::<Arc<DbPool>>().unwrap();
@@ -126,9 +126,9 @@ fn create_users(res: &mut Response,  depot: &mut Depot, user_create: JsonBody<Us
     summary = "get users information",
     description = "the objective of the endpoints is to get users information"
 )]
-pub async fn get_users_information(res: &mut Response, depot: &mut Depot, authentification: HeaderParam<String, true>) {
+pub async fn get_users_information(res: &mut Response, depot: &mut Depot, authentication: HeaderParam<String, true>) {
     
-    println!("🪪 Authentication header: {}", authentification.as_str());
+    println!("🪪 Authentication header: {}", authentication.as_str());
 
     // ✅ Get DB connection
     let pool = depot.obtain::<Arc<DbPool>>().unwrap();
@@ -162,9 +162,9 @@ pub async fn get_users_information(res: &mut Response, depot: &mut Depot, authen
     summary = "Update users information",
     description = "the objectve of this endpoints is to update users information"
 )]
-fn update_users(user_id: PathParam<Uuid>, res: &mut Response, authentification: HeaderParam<String, true>, depot: &mut Depot, user_update: JsonBody<UserUpdate>) {
+fn update_users(user_id: PathParam<Uuid>, res: &mut Response, authentication: HeaderParam<String, true>, depot: &mut Depot, user_update: JsonBody<UserUpdate>) {
     
-    println!("🪪 Authentication header: {}", authentification.as_str());
+    println!("🪪 Authentication header: {}", authentication.as_str());
 
     let user_uuid = user_id.into_inner();
 
@@ -234,9 +234,9 @@ fn update_users(user_id: PathParam<Uuid>, res: &mut Response, authentification: 
     summary = "Delete Users Information",
     description = "the objective of this endpoints is to delete users information"
 )]
-fn delete_users(user_id: PathParam<Uuid>, res: &mut Response, authentification: HeaderParam<String, true>, depot: &mut Depot) {
+fn delete_users(user_id: PathParam<Uuid>, res: &mut Response, authentication: HeaderParam<String, true>, depot: &mut Depot) {
     
-    println!("🪪 Authentication header: {}", authentification.as_str());
+    println!("🪪 Authentication header: {}", authentication.as_str());
 
     let pool = depot.obtain::<Arc<DbPool>>().unwrap();
     let mut conn = pool.get().expect("Failed to get DB connection");
@@ -296,9 +296,9 @@ fn delete_users(user_id: PathParam<Uuid>, res: &mut Response, authentification: 
     summary = "Get all posts by Users",
     description = "the objective of the endpoints is to get all post given users"
 )]
-fn get_posts_by_users(user_id: PathParam<Uuid>, res: &mut Response, authentification: HeaderParam<String, true>, depot: &mut Depot) {
+fn get_posts_by_users(user_id: PathParam<Uuid>, res: &mut Response, authentication: HeaderParam<String, true>, depot: &mut Depot) {
     
-    println!("🪪 Authentication header: {}", authentification.as_str());
+    println!("🪪 Authentication header: {}", authentication.as_str());
 
     let pool = depot.obtain::<Arc<DbPool>>().unwrap();
     let mut conn = pool.get().expect("Failed to get DB connection");

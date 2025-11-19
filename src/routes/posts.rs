@@ -17,9 +17,9 @@ use crate::models::schema::posts::{id, user_id};
     summary = "get all posts",
     description = "the objective of this endpoint is to retrieve all create post of given the current user"
 )]
-fn get_all_posts(res: &mut Response, authentification: HeaderParam<String, true>, depot: &mut Depot) {
+fn get_all_posts(res: &mut Response, authentication: HeaderParam<String, true>, depot: &mut Depot) {
 
-    println!("🪪 Authentication header: {}", authentification.as_str());
+    println!("🪪 Authentication header: {}", authentication.as_str());
 
     let pool = depot.obtain::<Arc<DbPool>>().unwrap();
     let mut conn = pool.get().expect("Failed to get DB connection");
@@ -44,9 +44,9 @@ fn get_all_posts(res: &mut Response, authentification: HeaderParam<String, true>
     summary = "create posts",
     description = " the objective of this endpoint is to create a post"
 )]
-fn create_posts(res: &mut Response, post_create: JsonBody<PostCreate>, depot: &mut Depot, authentification: HeaderParam<String, true>) {
+fn create_posts(res: &mut Response, post_create: JsonBody<PostCreate>, depot: &mut Depot, authentication: HeaderParam<String, true>) {
 
-    println!("🪪 Authentication header: {}", authentification.as_str());
+    println!("🪪 Authentication header: {}", authentication.as_str());
 
     // ✅ Get DB connection
     let pool = depot.obtain::<Arc<DbPool>>().unwrap();
@@ -86,9 +86,9 @@ fn create_posts(res: &mut Response, post_create: JsonBody<PostCreate>, depot: &m
     summary = "update posts",
     description = "update a specific post by id"
 )]
-fn update_posts(post_id: PathParam<Uuid>, res: &mut Response, post_update: JsonBody<PostCreate>, depot: &mut Depot, authentification: HeaderParam<String, true>) {
+fn update_posts(post_id: PathParam<Uuid>, res: &mut Response, post_update: JsonBody<PostCreate>, depot: &mut Depot, authentication: HeaderParam<String, true>) {
 
-    println!("🪪 Authentication header: {}", authentification.as_str());
+    println!("🪪 Authentication header: {}", authentication.as_str());
 
     // ✅ Get DB connection
     let pool = depot.obtain::<Arc<DbPool>>().unwrap();
@@ -158,9 +158,9 @@ fn update_posts(post_id: PathParam<Uuid>, res: &mut Response, post_update: JsonB
     summary = "delete posts",
     description = "delete a specific post by id"
 )]
-fn delete_posts(post_id: PathParam<Uuid>, res: &mut Response, depot: &mut Depot, authentification: HeaderParam<String, true>) {
+fn delete_posts(post_id: PathParam<Uuid>, res: &mut Response, depot: &mut Depot, authentication: HeaderParam<String, true>) {
    
-    println!("🪪 Authentication header: {}", authentification.as_str());
+    println!("🪪 Authentication header: {}", authentication.as_str());
 
     // ✅ Get DB connection
     let pool = depot.obtain::<Arc<DbPool>>().unwrap();
@@ -210,8 +210,8 @@ fn delete_posts(post_id: PathParam<Uuid>, res: &mut Response, depot: &mut Depot,
     summary = "get posts information",
     description = "get a specific post by id"
 )]
-fn get_posts_information(post_id: PathParam<Uuid>, res: &mut Response, depot: &mut Depot, authentification: HeaderParam<String, true>) {
-   println!("🪪 Authentication header: {}", authentification.as_str());
+fn get_posts_information(post_id: PathParam<Uuid>, res: &mut Response, depot: &mut Depot, authentication: HeaderParam<String, true>) {
+   println!("🪪 Authentication header: {}", authentication.as_str());
 
     // ✅ Get DB connection
     let pool = depot.obtain::<Arc<DbPool>>().unwrap();
