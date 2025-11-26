@@ -51,7 +51,7 @@ async fn main() {
 
     let cors = Cors::new()
         .allow_origin(AllowOrigin::any())
-        .allow_methods(vec![Method::GET, Method::POST, Method::DELETE])
+        .allow_methods(vec![Method::GET, Method::POST, Method::DELETE, Method::PUT])
         .allow_headers("authorization")
         .allow_headers("authentication")
         .into_handler();
